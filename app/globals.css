@@ -1,0 +1,87 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  :root {
+    /* Light Mode — Main #F8FAFC, Cards #FFFFFF */
+    --background: 210 40% 98%; /* #F8FAFC */
+    --foreground: 220 39% 11%; /* #111827 */
+    --card: 0 0% 100%; /* #FFFFFF */
+    --card-foreground: 220 39% 11%;
+    --muted: 210 40% 96%;
+    --muted-foreground: 215 16% 47%; /* #64748B */
+    --border: 214 32% 91%;
+    --input: 214 32% 91%;
+    --ring: 243 75% 59%; /* brand indigo */
+  }
+
+  .dark {
+    /* Dark Mode — Main #020617, Cards #0F172A */
+    --background: 222 47% 5%; /* #020617 */
+    --foreground: 210 40% 98%;
+    --card: 222 47% 11%; /* #0F172A */
+    --card-foreground: 210 40% 98%;
+    --muted: 217 33% 17%;
+    --muted-foreground: 215 20% 65%;
+    --border: 217 33% 20%;
+    --input: 217 33% 20%;
+    --ring: 243 75% 59%;
+  }
+
+  * {
+    @apply border-border;
+  }
+
+  body {
+    @apply bg-background text-foreground antialiased;
+    font-feature-settings: "cv11", "ss01";
+    text-rendering: optimizeLegibility;
+  }
+
+  /* Arabic content uses Cairo automatically when dir=rtl */
+  [dir="rtl"] {
+    @apply font-arabic;
+  }
+}
+
+@layer utilities {
+  .text-gradient {
+    @apply bg-brand-gradient bg-clip-text text-transparent;
+  }
+
+  .grid-pattern {
+    background-image: radial-gradient(hsl(var(--border)) 1px, transparent 1px);
+    background-size: 22px 22px;
+  }
+
+  /* Skeleton shimmer for video/course loading states */
+  .skeleton {
+    @apply relative overflow-hidden bg-muted;
+  }
+  .skeleton::after {
+    content: "";
+    @apply absolute inset-0 -translate-x-full animate-shimmer;
+    background: linear-gradient(
+      90deg,
+      transparent,
+      hsl(var(--foreground) / 0.06),
+      transparent
+    );
+  }
+}
+
+/* Respect reduced motion */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.001ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.001ms !important;
+  }
+}
+
+html {
+  scroll-behavior: smooth;
+}
